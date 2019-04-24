@@ -1,4 +1,4 @@
-const API_URL = 'https://content-sheets.googleapis.com/v4/spreadsheets/1RHmYo103XOAx-4xuVB-HkH3Gc0n5nbvlBTcJ2jV-0lg/values/Centre-Master!A4%3AT1?valueRenderOption=UNFORMATTED_VALUE&key=AIzaSyDEhKuIvmI5VDHLu8FjvnLLrWZ-b4qpyQk';
+const API_URL = 'https://content-sheets.googleapis.com/v4/spreadsheets/1RHmYo103XOAx-4xuVB-HkH3Gc0n5nbvlBTcJ2jV-0lg/values/Centre-Master!A1%3AT1000?valueRenderOption=UNFORMATTED_VALUE&key=AIzaSyDEhKuIvmI5VDHLu8FjvnLLrWZ-b4qpyQk';
 const centres=[
 
     {
@@ -25,7 +25,16 @@ const centres=[
 const  getDataFromGSheet=async ()=>{
    return fetch(API_URL)
     .then(response => response.json())
-    .then(data =>  data);
+    .then(data =>{
+
+        localStorage.setItem('bk_centres', JSON.stringify(data));
+        return data;
+
+    } )
+    .catch(err=>{
+        let data=localStorage.getItem('bk_centres') || '{values:[]}';
+        return JSON.parse(data);
+    });
 
 };
 
@@ -33,8 +42,9 @@ const  getDataFromGSheet=async ()=>{
 const apiClient={
 
     getCentres : async ()=>{
+
         const data =await  getDataFromGSheet();
-        console.log(data);
+
         let centres=[];
         data.values.map((item,ictr)=>{
             if(ictr>0 && item[2])
@@ -45,7 +55,7 @@ const apiClient={
                     address2:item[7],
                     city:item[8],
                     state:item[9],
-                    pincode:'',//item[10] || '',
+                    pincode:item[10],
                     phone1:item[12],
                     phone2:item[11],
                     contact:item[13],

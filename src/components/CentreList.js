@@ -18,12 +18,13 @@ class CentreList extends Component {
 
     searchCentre = (keywordText) => {
 
+
         //filter the centre
         const filtered=this.props.centres.filter(centre=>{
               let keyword=keywordText.toLowerCase();
                 if(keyword==="") keyword="chennai";
-
-                return   centre.name.toLowerCase().indexOf(keyword)>=0 || centre.city.toLowerCase().indexOf(keyword)>=0;
+                centre.pincode=centre.pincode?centre.pincode.toString():"";
+                return  centre.pincode.toLowerCase().indexOf(keyword)>=0 || centre.location.toLowerCase().indexOf(keyword)>=0 || centre.name.toLowerCase().indexOf(keyword)>=0 || centre.city.toLowerCase().indexOf(keyword)>=0;
 
             });
 
@@ -32,12 +33,15 @@ class CentreList extends Component {
     }
 
     onSearchInputChange = (event) => {
+
+        if(event.target.value.length<5) return;
         if (event.target.value) {
             this.setState({searchString: event.target.value})
         } else {
-            this.setState({searchString: ''})
+            this.setState({searchString: 'chennai'})
         }
         this.searchCentre(event.target.value)
+
     }
 
     render() {
@@ -50,6 +54,7 @@ class CentreList extends Component {
                             variant="outlined"
                             placeholder="Search for Centres"
                             margin="normal"
+
                             onChange={this.onSearchInputChange} />
                 {this.state.centres ? (
 

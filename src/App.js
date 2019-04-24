@@ -15,6 +15,7 @@ class App extends Component {
   }
 
   componentDidMount() {
+
     client.getCentres().then(centreList=>{
       this.setState({centres:centreList});
     });
