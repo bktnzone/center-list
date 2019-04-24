@@ -26,3 +26,14 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+section {
+  flex: 1;
+  padding: 15px;
+  font-size: 14px;
+}
+
+section p{
+  padding:5px;
+  margin:0;
+}
