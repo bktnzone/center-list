@@ -9,10 +9,15 @@ const NavBar = () => {
         <div>
             <AppBar position="static" style={{ background: 'maroon' }}>
                 <Toolbar>
-                    <Typography variant="title" color="inherit">
-                    <img src={logo} alt="Logo" height="50"/>
-                      <span className="pull-right">BK Centres in Chennai</span>
 
+
+                    <Typography variant="title" color="inherit" className="pull-left">
+                    <div   > <img   src={logo} alt="Logo" height="50"/></div>
+
+
+                    </Typography>
+                    <Typography variant="title" color="inherit" className="pull-right">
+                    <div   > Chennai Centres</div>
                     </Typography>
                 </Toolbar>
             </AppBar>
