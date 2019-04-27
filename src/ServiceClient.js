@@ -1,26 +1,4 @@
 const API_URL = 'https://content-sheets.googleapis.com/v4/spreadsheets/1RHmYo103XOAx-4xuVB-HkH3Gc0n5nbvlBTcJ2jV-0lg/values/Centre-Master!A1%3AT1000?valueRenderOption=UNFORMATTED_VALUE&key=AIzaSyDEhKuIvmI5VDHLu8FjvnLLrWZ-b4qpyQk';
-const centres=[
-
-    {
-        code:'cod',
-        name:'cod',
-        parentCentre:'cod',
-        address1:'cod',
-        address2:'cod',
-        city:'cod',
-        state:'cod',
-        pincode:'cod',
-        contactName:'cod',
-        emailId:'cod',
-        phoneNo1:'cod',
-        phoneNo2:'cod'
-
-
-    }
-
-
-];
-
 
 const  getDataFromGSheet=async ()=>{
    return fetch(API_URL)
@@ -47,7 +25,7 @@ const apiClient={
 
         let centres=[];
         data.values.map((item,ictr)=>{
-            if(ictr>0 && item[2])
+            if(ictr>0 && item[2] && item[15]==="Yes")
                 centres.push({
                     location:item[2],
                     name:item[3],

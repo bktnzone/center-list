@@ -5,7 +5,8 @@
   "dependencies": {
     "@material-ui/core": "^1.1.0",
     "react": "^16.4.0",
-    "react-dom": "^16.4.0"
+    "react-dom": "^16.4.0",
+    "react-select": "^2.4.3"
   },
   "devDependencies": {
     "react-scripts": "1.1.4"

@@ -1,28 +1,53 @@
 import React, {Component} from 'react'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
-
+import Select from 'react-select';
 import Centre from './Centre'
+import PropTypes from 'prop-types';
 
 
+const propTypes = {
+    centres: PropTypes.array
+  };
 
 class CentreList extends Component {
 
+
+
+      componentDidMount=()=>{
+
+        console.log(this.props.centres);
+        let uniqueList=[...new Set(this.props.centres.map((item)=> item.location))];
+
+
+        let locationOptions=  uniqueList.map(c=>{
+            return {value:c,label:c};
+         });
+
+
+         this.setState({locationOptions:locationOptions});
+      }
+
     constructor(props) {
+
         super(props)
         this.state={
-            centres: props.centres, searchString: 'chennai'
-        }
-        this.searchCentre('chennai')
+            selectedOption: null,
+            locationOptions:[],
+            centres: props.centres, searchString: 'Annanagar'
+        };
+
+        this.searchCentre('Annanagar')
     }
 
-    searchCentre = (keywordText) => {
 
+
+    searchCentre = (keywordText) => {
 
         //filter the centre
         const filtered=this.props.centres.filter(centre=>{
               let keyword=keywordText.toLowerCase();
-                if(keyword==="") keyword="chennai";
+                if(keyword==="") keyword="Annanagar";
                 centre.pincode=centre.pincode?centre.pincode.toString():"";
                 return  centre.pincode.toLowerCase().indexOf(keyword)>=0 || centre.location.toLowerCase().indexOf(keyword)>=0 || centre.name.toLowerCase().indexOf(keyword)>=0 || centre.city.toLowerCase().indexOf(keyword)>=0;
 
@@ -32,37 +57,32 @@ class CentreList extends Component {
 
     }
 
-    onSearchInputChange = (event) => {
+    onSearchInputChange = (selectedOption) => {
 
-        if(event.target.value.length<5) return;
-        if (event.target.value) {
-            this.setState({searchString: event.target.value})
-        } else {
-            this.setState({searchString: 'chennai'})
-        }
-        this.searchCentre(event.target.value)
+        this.setState({ selectedOption });
+        this.searchCentre(selectedOption.value);
 
     }
 
     render() {
+        const { selectedOption,locationOptions } = this.state;
+
         return (
             <div>
+                <Select
+                        value={selectedOption}
+                        onChange={this.onSearchInputChange}
+                        options={locationOptions}
+                    />
 
 
-                <TextField style={{padding: 24}}
-                            id="searchInput"
-                            variant="outlined"
-                            placeholder="Search for Centres"
-                            margin="normal"
-
-                            onChange={this.onSearchInputChange} />
                 {this.state.centres ? (
 
                     <div>
 
                         <Grid container spacing={24} style={{padding: 24}}>
                             { this.state.centres.map(currentCentre => (
-                                <Grid item xs={12} sm={6} lg={4} xl={3}>
+                                <Grid key={currentCentre.code} item xs={12} sm={6} lg={4} xl={3}>
                                     <Centre centre={currentCentre} />
                                 </Grid>
                             ))}
@@ -76,5 +96,5 @@ class CentreList extends Component {
     }
 }
 
-
+CentreList.propTypes = propTypes;
 export default CentreList;

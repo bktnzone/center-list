@@ -5,29 +5,31 @@ import client from './ServiceClient';
 import './App.css';
 
 class App extends Component {
-
+  state = {
+    centres: [],
+    isLoaded: false,
+  };
   constructor(props) {
     super(props);
 
-    this.state = {
-      centres: [],
-    };
   }
 
-  componentDidMount() {
+   componentDidMount=async () =>{
 
-    client.getCentres().then(centreList=>{
-      this.setState({centres:centreList});
-    });
+    let centreList= await  client.getCentres();
+    this.setState({centres:centreList,isLoaded:true});
 
   }
 
   render() {
+
+    const {centres,isLoaded}=this.state;
     return (
       <div>
         <NavBar />
+          { isLoaded &&
+          <CentreList centres={centres} /> }
 
-        <CentreList centres={this.state.centres}/>
       </div>
     );
   }

@@ -11,7 +11,7 @@ const NavBar = () => {
                 <Toolbar>
                     <Typography variant="title" color="inherit">
                     <img src={logo} alt="Logo" height="50"/>
-                    Tamilnadu Centres
+                      <span className="pull-right">BK Centres in Chennai</span>
 
                     </Typography>
                 </Toolbar>
